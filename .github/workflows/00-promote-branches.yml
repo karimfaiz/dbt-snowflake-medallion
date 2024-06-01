@@ -24,8 +24,8 @@ jobs:
     
     - name: Checkout code
       uses: actions/checkout@v4
-        with:
-          ref: ${{ env.target }}
+      with:
+        ref: ${{ env.target }}
 
     - name: Reset promotion branch
       run: |
