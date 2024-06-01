@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
     permissions:
       read: all
+      wrtie: all
 
 jobs:
   create-pull-request:
