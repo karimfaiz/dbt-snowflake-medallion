@@ -1,4 +1,4 @@
-name: 00 - Branch Promotion
+name: 00 - Branch Promotion Auto-PR
 
 on:
   workflow_dispatch:
