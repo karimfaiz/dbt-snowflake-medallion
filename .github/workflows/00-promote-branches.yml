@@ -40,4 +40,3 @@ jobs:
         branch: pr-${{ env.source }}-to-${{ env.target }}
         delete-branch: true
         base: ${{ env.target }}
-        head: ${{ env.source }}
