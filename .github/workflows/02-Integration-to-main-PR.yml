@@ -1,0 +1,20 @@
+name: 02 [Integration to Main] PR
+on:
+  workflow_dispatch:
+
+jobs:
+  IntegrationPromotion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Reset promotion branch
+        run: |
+          git fetch origin integration:integration
+          git reset --hard integration
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: main-promotion
+          reviewers: karimfaiz
