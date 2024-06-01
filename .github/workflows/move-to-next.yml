@@ -43,13 +43,15 @@ jobs:
         body: |
           Automated PR to move code from ${{ env.source }} branch to ${{ env.target }} branch.
         labels: |
-          automated-pr
+          automated-pr,automerge
         assignees: ${{ github.actor }}
         draft: false
 
   automerge:
     runs-on: ubuntu-latest
     needs: create-pull-request
+    permissions: read-all
+    permissions: write-all
 
     steps:
     - name: Checkout code
