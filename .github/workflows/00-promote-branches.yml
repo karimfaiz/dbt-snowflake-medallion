@@ -1,4 +1,4 @@
-name: Branch Promotion
+name: 00 - Branch Promotion
 
 on:
   workflow_dispatch:
