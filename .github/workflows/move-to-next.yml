@@ -35,6 +35,8 @@ jobs:
         head: ${{ env.source }}
         title: 'Move code from ${{ env.source }} to ${{ env.target }}'
         body: 'Automated PR to move code from ${{ env.source }} branch to ${{ env.target }} branch'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   merge-pull-request:
     runs-on: ubuntu-latest
@@ -48,14 +50,20 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-          const prNumber = ${{ steps.create_pr.outputs.pull_request_number }};
-          if (prNumber) {
-            await github.pulls.merge({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: prNumber,
-              merge_method: 'merge',
-            });
-          } else {
-            console.log('No pull request created to merge.');
-          }
+          const pr = await github.pulls.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            base: process.env.GITHUB_REF.split('/').slice(-1)[0] === 'develop' ? 'integration' : 'main',
+            head: process.env.GITHUB_REF.split('/').slice(-1)[0],
+            title: `Move code from ${process.env.GITHUB_REF.split('/').slice(-1)[0]} to ${process.env.GITHUB_REF.split('/').slice(-1)[0] === 'develop' ? 'integration' : 'main'}`,
+            body: `Automated PR to move code from ${process.env.GITHUB_REF.split('/').slice(-1)[0]} branch to ${process.env.GITHUB_REF.split('/').slice(-1)[0] === 'develop' ? 'integration' : 'main'} branch`,
+          });
+
+          await github.pulls.merge({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: pr.data.number,
+            merge_method: 'merge',
+          });
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
