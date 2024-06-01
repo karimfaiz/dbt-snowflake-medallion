@@ -1,8 +1,7 @@
 name: Integration to Main promotion pull request
 on:
-  push:
-    branches:
-      - workflow_dispatch 
+  workflow_dispatch:
+  
 jobs:
   MainPromotion:
     runs-on: ubuntu-latest

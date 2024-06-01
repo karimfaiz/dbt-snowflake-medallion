@@ -1,8 +1,7 @@
 name: Develop to Integration promotion pull request
 on:
-  push:
-    branches:
-      - workflow_dispatch
+  workflow_dispatch:
+
 jobs:
   IntegrationPromotion:
     runs-on: ubuntu-latest
