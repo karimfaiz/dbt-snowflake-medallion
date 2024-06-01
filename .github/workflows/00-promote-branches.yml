@@ -6,7 +6,7 @@ on:
 jobs:
   PromoteBranch:
     runs-on: ubuntu-latest
-
+    steps:
     - name: Determine Source and Target Branch
       id: branches
       run: |
