@@ -27,11 +27,6 @@ jobs:
       with:
         ref: ${{ env.target }}
 
-    - name: Reset promotion branch
-      run: |
-        git fetch origin ${{ env.source }}:${{ env.source }}
-        git reset --hard ${{ env.source }}
-
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
       with:
