@@ -25,6 +25,8 @@ jobs:
           exit 1
         fi
       shell: bash
+    - name: Checkout to a different branch
+        run: git checkout main
 
     - name: Reset promotion branch
       run: |
