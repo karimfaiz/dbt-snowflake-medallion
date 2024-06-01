@@ -57,9 +57,13 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      permissions:
+          contents: read
 
     - name: Automerge the Pull Request
       id: automerge
       uses: "pascalgn/automerge-action@v0.16.3"
+      permissions:
+          contents: write
       env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
