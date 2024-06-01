@@ -1,9 +1,9 @@
-name: Develop to Integration promotion pull request
+name: 01 [Develop to Integration] PR
 on:
   workflow_dispatch:
-
+  
 jobs:
-  IntegrationPromotion:
+  MainPromotion:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -11,8 +11,8 @@ jobs:
           ref: integration
       - name: Reset promotion branch
         run: |
-          git fetch origin develop:develop
-          git reset --hard develop
+          git fetch origin integration:integration
+          git reset --hard integration
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
