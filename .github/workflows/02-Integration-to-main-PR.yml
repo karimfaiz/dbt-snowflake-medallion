@@ -8,11 +8,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: integration
+          ref: main
       - name: Reset promotion branch
         run: |
-          git fetch origin main:main
-          git reset --hard main
+          git fetch origin integration:integration
+          git reset --hard integration
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
