@@ -7,10 +7,6 @@ jobs:
   PromoteBranch:
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
     - name: Determine Source and Target Branch
       id: branches
       run: |
@@ -25,9 +21,11 @@ jobs:
           exit 1
         fi
       shell: bash
-    - name: Checkout to a different branch
-      run: git checkout ${{ env.target }}
-
+    
+    - name: Checkout code
+      uses: actions/checkout@v4
+        with:
+          ref: ${{ env.target }}
 
     - name: Reset promotion branch
       run: |
