@@ -1,20 +1,31 @@
 name: Create integration promotion pull request
+
 on:
   push:
     branches:
       - develop
+
 jobs:
   IntegrationPromotion:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
           ref: integration
+
       - name: Reset promotion branch
         run: |
           git fetch origin develop:develop
           git reset --hard develop
+
       - name: Create Pull Request
+        id: create_pr
         uses: peter-evans/create-pull-request@v6
         with:
           branch: integration-promotion
+
+      - name: Automerge the Pull Request
+        uses: pascalgn/automerge-action@v0.16.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
