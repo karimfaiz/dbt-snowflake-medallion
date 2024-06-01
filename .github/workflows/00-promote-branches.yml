@@ -32,11 +32,14 @@ jobs:
         git fetch origin ${{ env.source }}:${{ env.source }}
         git reset --hard ${{ env.source }}
 
+    - name: Set current date as env variable
+      run: echo "datetime=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: 'Promote ${{ env.source }} to ${{ env.target }}'
+        commit-message: '${{ env.datetime }} - Promote ${{ env.source }} to ${{ env.target }}'
         branch: pr-${{ env.source }}-to-${{ env.target }}
         delete-branch: true
         base: ${{ env.target }}
