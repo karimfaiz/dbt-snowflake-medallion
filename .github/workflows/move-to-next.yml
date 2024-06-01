@@ -23,6 +23,8 @@ jobs:
         else
           echo "Invalid source branch"
           exit 1
+        fi
+      shell: bash
 
     - name: Create Pull Request
       id: create_pr
