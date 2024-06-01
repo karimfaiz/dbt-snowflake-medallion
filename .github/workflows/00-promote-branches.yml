@@ -26,7 +26,8 @@ jobs:
         fi
       shell: bash
     - name: Checkout to a different branch
-      run: git checkout main
+      run: git checkout ${{ env.target }}
+
 
     - name: Reset promotion branch
       run: |
