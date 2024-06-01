@@ -31,28 +31,3 @@ jobs:
       run: |
         git fetch origin ${{ env.source }}:${{ env.source }}
         git reset --hard ${{ env.source }}
-
-    - name: Set current date as env variable
-      run: echo "datetime=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
-
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v6
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: '${{ env.datetime }} - Promote ${{ env.source }} to ${{ env.target }}'
-        branch: pr-${{ env.source }}-to-${{ env.target }}
-        delete-branch: true
-        base: ${{ env.target }}
-        head: ${{ env.source }}
-        title: '[Auto] Promote "${{ env.source }}" to "${{ env.target }}"'
-        body: |
-          This is an automated pull request to merge changes from ${{ env.source }} to ${{ env.target }}.
-          The workflow was triggered by : ${{ github.actor }}
-        reviewers: karimfaiz
-        labels: |
-          automated pr
-        assignees: ${{ github.actor }}
-        draft: false
-        signoff: false
-        author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
-        committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
