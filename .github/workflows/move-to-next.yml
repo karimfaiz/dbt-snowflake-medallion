@@ -2,12 +2,6 @@ name: Move to Next Env
 
 on:
   workflow_dispatch:
-    inputs:
-      source:
-        description: 'Source branch'
-        required: true
-        default: 'develop'
-        type: string
 
 jobs:
   create-pull-request:
@@ -20,10 +14,10 @@ jobs:
     - name: Determine Source and Target Branch
       id: branches
       run: |
-        if [ "${{ github.event.inputs.source }}" == "develop" ]; then
+        if [[ "${GITHUB_REF}" == "refs/heads/develop" ]]; then
           echo "source=develop" >> $GITHUB_ENV
           echo "target=integration" >> $GITHUB_ENV
-        elif [ "${{ github.event.inputs.source }}" == "integration" ]; then
+        elif [[ "${GITHUB_REF}" == "refs/heads/integration" ]]; then
           echo "source=integration" >> $GITHUB_ENV
           echo "target=main" >> $GITHUB_ENV
         else
@@ -52,12 +46,12 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-          const pr_number = '${{ steps.create_pr.outputs.pull_request_number }}';
-          if (pr_number) {
+          const prNumber = ${{ steps.create_pr.outputs.pull_request_number }};
+          if (prNumber) {
             await github.pulls.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: pr_number,
+              pull_number: prNumber,
               merge_method: 'merge',
             });
           } else {
